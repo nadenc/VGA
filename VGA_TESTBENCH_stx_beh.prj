@@ -1,0 +1,6 @@
+verilog isim_temp "ipcore_dir/VGA_Clocks.v"
+verilog isim_temp "lib/scroll_colour.v"
+verilog isim_temp "../lib/clk_div/clk_div.v"
+verilog isim_temp "VGA_Display.v"
+verilog isim_temp "VGA_TESTBENCH.v"
+verilog isim_temp "C:/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v"

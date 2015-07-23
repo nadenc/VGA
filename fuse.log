@@ -1,0 +1,29 @@
+Running: fuse.exe -relaunch -intstyle "ise" -incremental -lib "unisims_ver" -lib "unimacro_ver" -lib "xilinxcorelib_ver" -lib "secureip" -o "D:/Projects/FPGA/VGA/VGA_TESTBENCH_isim_beh.exe" -prj "D:/Projects/FPGA/VGA/VGA_TESTBENCH_beh.prj" "work.VGA_TESTBENCH" "work.glbl" 
+ISim P.20131013 (signature 0x7708f090)
+Number of CPUs detected in this system: 4
+Turning on mult-threading, number of parallel sub-compilation jobs: 8 
+Determining compilation order of HDL files
+Analyzing Verilog file "D:/Projects/FPGA/VGA/ipcore_dir/VGA_Clocks.v" into library work
+Analyzing Verilog file "D:/Projects/FPGA/VGA/lib/scroll_colour.v" into library work
+Analyzing Verilog file "D:/Projects/FPGA/VGA/../lib/clk_div/clk_div.v" into library work
+Analyzing Verilog file "D:/Projects/FPGA/VGA/VGA_Display.v" into library work
+Analyzing Verilog file "D:/Projects/FPGA/VGA/VGA_TESTBENCH.v" into library work
+Analyzing Verilog file "C:/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v" into library work
+Starting static elaboration
+Completed static elaboration
+Compiling module IBUFG
+Compiling module PLL_ADV(BANDWIDTH="OPTIMIZED",CL...
+Compiling module PLL_BASE(CLKFBOUT_MULT=22,CLKIN_...
+Compiling module BUFG
+Compiling module VGA_Clocks
+Compiling module clk_div
+Compiling module scroll_colour
+Compiling module VGA_Display
+Compiling module VGA_TESTBENCH
+Compiling module glbl
+Time Resolution for simulation is 1ps.
+Waiting for 2 sub-compilation(s) to finish...
+Compiled 10 Verilog Units
+Built simulation executable D:/Projects/FPGA/VGA/VGA_TESTBENCH_isim_beh.exe
+Fuse Memory Usage: 40540 KB
+Fuse CPU Usage: 703 ms

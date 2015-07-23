@@ -1,0 +1,8 @@
+INTSTYLE=ise
+INFILE=D:\Projects\FPGA\VGA\VGA_Display.ncd
+OUTFILE=D:\Projects\FPGA\VGA\VGA_Display.bit
+FAMILY=Spartan6
+PART=xc6slx9-3csg324
+WORKINGDIR=D:\Projects\FPGA\VGA
+LICENSE=WebPack
+USER_INFO=211059095_0_0_532

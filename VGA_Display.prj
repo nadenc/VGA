@@ -1,0 +1,2 @@
+verilog work "ipcore_dir/VGA_Clocks.v"
+verilog work "VGA_Display.v"

@@ -1,0 +1,6 @@
+verilog work "ipcore_dir/VGA_Clocks.v"
+verilog work "lib/scroll_colour.v"
+verilog work "../lib/clk_div/clk_div.v"
+verilog work "VGA_Display.v"
+verilog work "VGA_TESTBENCH.v"
+verilog work "C:/Xilinx/14.7/ISE_DS/ISE//verilog/src/glbl.v"
