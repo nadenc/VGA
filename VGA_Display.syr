@@ -4,13 +4,13 @@ Copyright (c) 1995-2013 Xilinx, Inc.  All rights reserved.
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.17 secs
+Total CPU time to Xst completion: 0.13 secs
  
 --> Parameter xsthdpdir set to xst
 
 
 Total REAL time to Xst completion: 0.00 secs
-Total CPU time to Xst completion: 0.17 secs
+Total CPU time to Xst completion: 0.13 secs
  
 --> Reading design: VGA_Display.prj
 
@@ -110,6 +110,10 @@ Cores Search Directories           : {"ipcore_dir"  }
 =========================================================================
 Analyzing Verilog file "D:\Projects\FPGA\VGA\ipcore_dir\VGA_Clocks.v" into library work
 Parsing module <VGA_Clocks>.
+Analyzing Verilog file "D:\Projects\FPGA\VGA\lib\scroll_colour.v" into library work
+Parsing module <scroll_colour>.
+Analyzing Verilog file "D:\Projects\FPGA\lib\clk_div\clk_div.v" into library work
+Parsing module <clk_div>.
 Analyzing Verilog file "D:\Projects\FPGA\VGA\VGA_Display.v" into library work
 Parsing module <VGA_Display>.
 
@@ -118,6 +122,7 @@ Parsing module <VGA_Display>.
 =========================================================================
 
 Elaborating module <VGA_Display>.
+WARNING:HDLCompiler:872 - "D:\Projects\FPGA\VGA\VGA_Display.v" Line 87: Using initial value of div_scroll since it is never assigned
 
 Elaborating module <VGA_Clocks>.
 
@@ -132,8 +137,10 @@ WARNING:HDLCompiler:1127 - "D:\Projects\FPGA\VGA\ipcore_dir\VGA_Clocks.v" Line 1
 WARNING:HDLCompiler:1127 - "D:\Projects\FPGA\VGA\ipcore_dir\VGA_Clocks.v" Line 119: Assignment to locked_unused ignored, since the identifier is never used
 
 Elaborating module <BUFG>.
-WARNING:HDLCompiler:1127 - "D:\Projects\FPGA\VGA\VGA_Display.v" Line 132: Assignment to clk_scroll_rst ignored, since the identifier is never used
-WARNING:HDLCompiler:634 - "D:\Projects\FPGA\VGA\VGA_Display.v" Line 36: Net <rgb[7]> does not have a driver.
+
+Elaborating module <clk_div>.
+
+Elaborating module <scroll_colour>.
 
 =========================================================================
 *                           HDL Synthesis                               *
@@ -141,16 +148,19 @@ WARNING:HDLCompiler:634 - "D:\Projects\FPGA\VGA\VGA_Display.v" Line 36: Net <rgb
 
 Synthesizing Unit <VGA_Display>.
     Related source file is "D:\Projects\FPGA\VGA\VGA_Display.v".
-WARNING:Xst:653 - Signal <rgb> is used but never assigned. This sourceless signal will be automatically connected to value GND.
     Found 1-bit register for signal <hsync_pin>.
+    Found 1-bit register for signal <hdisp_flag>.
     Found 11-bit register for signal <vpos>.
     Found 1-bit register for signal <vsync_pin>.
+    Found 1-bit register for signal <vdisp_flag>.
+    Found 1-bit register for signal <clk_scroll_rst>.
+    Found 1-bit register for signal <scroll_refresh>.
     Found 12-bit register for signal <hpos>.
-    Found 12-bit adder for signal <hpos[11]_GND_1_o_add_4_OUT> created at line 100.
-    Found 11-bit adder for signal <vpos[10]_GND_1_o_add_11_OUT> created at line 114.
+    Found 12-bit adder for signal <hpos[11]_GND_1_o_add_4_OUT> created at line 101.
+    Found 11-bit adder for signal <vpos[10]_GND_1_o_add_11_OUT> created at line 115.
     Summary:
 	inferred   2 Adder/Subtractor(s).
-	inferred  25 D-type flip-flop(s).
+	inferred  29 D-type flip-flop(s).
 Unit <VGA_Display> synthesized.
 
 Synthesizing Unit <VGA_Clocks>.
@@ -159,17 +169,48 @@ Synthesizing Unit <VGA_Clocks>.
 	no macro.
 Unit <VGA_Clocks> synthesized.
 
+Synthesizing Unit <clk_div>.
+    Related source file is "D:\Projects\FPGA\lib\clk_div\clk_div.v".
+    Found 1-bit register for signal <clk_out>.
+    Found 32-bit register for signal <count>.
+    Found 32-bit adder for signal <count[31]_GND_6_o_add_2_OUT> created at line 43.
+    Summary:
+	inferred   1 Adder/Subtractor(s).
+	inferred  33 D-type flip-flop(s).
+	inferred   1 Multiplexer(s).
+Unit <clk_div> synthesized.
+
+Synthesizing Unit <scroll_colour>.
+    Related source file is "D:\Projects\FPGA\VGA\lib\scroll_colour.v".
+    Found 8-bit register for signal <disp_out<8:1>>.
+    Found 1-bit register for signal <scroll_rst_flag>.
+    Found 9-bit register for signal <buffer>.
+    Found 9-bit adder for signal <buffer[8]_GND_7_o_add_3_OUT> created at line 52.
+    Summary:
+	inferred   1 Adder/Subtractor(s).
+	inferred  18 D-type flip-flop(s).
+	inferred   1 Multiplexer(s).
+Unit <scroll_colour> synthesized.
+
 =========================================================================
 HDL Synthesis Report
 
 Macro Statistics
-# Adders/Subtractors                                   : 2
+# Adders/Subtractors                                   : 4
  11-bit adder                                          : 1
  12-bit adder                                          : 1
-# Registers                                            : 4
- 1-bit register                                        : 2
+ 32-bit adder                                          : 1
+ 9-bit adder                                           : 1
+# Registers                                            : 13
+ 1-bit register                                        : 8
  11-bit register                                       : 1
  12-bit register                                       : 1
+ 32-bit register                                       : 1
+ 8-bit register                                        : 1
+ 9-bit register                                        : 1
+# Multiplexers                                         : 2
+ 32-bit 2-to-1 multiplexer                             : 1
+ 9-bit 2-to-1 multiplexer                              : 1
 
 =========================================================================
 
@@ -179,19 +220,29 @@ Macro Statistics
 
 
 Synthesizing (advanced) Unit <VGA_Display>.
-The following registers are absorbed into counter <hpos>: 1 register on signal <hpos>.
 The following registers are absorbed into counter <vpos>: 1 register on signal <vpos>.
+The following registers are absorbed into counter <hpos>: 1 register on signal <hpos>.
 Unit <VGA_Display> synthesized (advanced).
+
+Synthesizing (advanced) Unit <clk_div>.
+The following registers are absorbed into counter <count>: 1 register on signal <count>.
+Unit <clk_div> synthesized (advanced).
+
+Synthesizing (advanced) Unit <scroll_colour>.
+The following registers are absorbed into counter <buffer>: 1 register on signal <buffer>.
+Unit <scroll_colour> synthesized (advanced).
 
 =========================================================================
 Advanced HDL Synthesis Report
 
 Macro Statistics
-# Counters                                             : 2
+# Counters                                             : 4
  11-bit up counter                                     : 1
  12-bit up counter                                     : 1
-# Registers                                            : 2
- Flip-Flops                                            : 2
+ 32-bit up counter                                     : 1
+ 9-bit up counter                                      : 1
+# Registers                                            : 16
+ Flip-Flops                                            : 16
 
 =========================================================================
 
@@ -202,9 +253,45 @@ INFO:Xst:1901 - Instance m1/pll_base_inst in unit m1/pll_base_inst of type PLL_B
 
 Optimizing unit <VGA_Display> ...
 
+Optimizing unit <scroll_colour> ...
+WARNING:Xst:1710 - FF/Latch <m2/count_31> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_30> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_29> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_28> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_27> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_26> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_25> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_24> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_23> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_22> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_21> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_20> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_19> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_18> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_17> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_16> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_15> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_14> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_13> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_12> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_11> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_10> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_9> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_8> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_7> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_6> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_5> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_4> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_3> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_2> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_1> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+WARNING:Xst:1710 - FF/Latch <m2/count_0> (without init value) has a constant value of 0 in block <VGA_Display>. This FF/Latch will be trimmed during the optimization process.
+
 Mapping all equations...
 Building and optimizing final netlist ...
-Found area constraint ratio of 100 (+ 5) on block VGA_Display, actual ratio is 0.
+Found area constraint ratio of 100 (+ 5) on block VGA_Display, actual ratio is 1.
+INFO:Xst:2260 - The FF/Latch <scroll_refresh> in Unit <VGA_Display> is equivalent to the following FF/Latch : <clk_scroll_rst> 
+INFO:Xst:2261 - The FF/Latch <scroll_refresh> in Unit <VGA_Display> is equivalent to the following FF/Latch, which will be removed : <clk_scroll_rst> 
 
 Final Macro Processing ...
 
@@ -212,8 +299,8 @@ Final Macro Processing ...
 Final Register Report
 
 Macro Statistics
-# Registers                                            : 25
- Flip-Flops                                            : 25
+# Registers                                            : 47
+ Flip-Flops                                            : 47
 
 =========================================================================
 
@@ -236,20 +323,22 @@ Top Level Output File Name         : VGA_Display.ngc
 
 Primitive and Black Box Usage:
 ------------------------------
-# BELS                             : 115
+# BELS                             : 159
 #      GND                         : 1
-#      INV                         : 2
+#      INV                         : 3
 #      LUT1                        : 21
-#      LUT2                        : 20
-#      LUT3                        : 2
-#      LUT4                        : 2
-#      LUT5                        : 4
-#      LUT6                        : 18
-#      MUXCY                       : 21
+#      LUT2                        : 16
+#      LUT3                        : 23
+#      LUT4                        : 15
+#      LUT5                        : 5
+#      LUT6                        : 10
+#      MUXCY                       : 29
+#      MUXF7                       : 3
 #      VCC                         : 1
-#      XORCY                       : 23
-# FlipFlops/Latches                : 25
-#      FD                          : 25
+#      XORCY                       : 32
+# FlipFlops/Latches                : 47
+#      FD                          : 39
+#      FDR                         : 8
 # Clock Buffers                    : 2
 #      BUFG                        : 2
 # IO Buffers                       : 11
@@ -265,16 +354,16 @@ Selected Device : 6slx9csg324-3
 
 
 Slice Logic Utilization: 
- Number of Slice Registers:              25  out of  11440     0%  
- Number of Slice LUTs:                   69  out of   5720     1%  
-    Number used as Logic:                69  out of   5720     1%  
+ Number of Slice Registers:              47  out of  11440     0%  
+ Number of Slice LUTs:                   93  out of   5720     1%  
+    Number used as Logic:                93  out of   5720     1%  
 
 Slice Logic Distribution: 
- Number of LUT Flip Flop pairs used:     69
-   Number with an unused Flip Flop:      44  out of     69    63%  
-   Number with an unused LUT:             0  out of     69     0%  
-   Number of fully used LUT-FF pairs:    25  out of     69    36%  
-   Number of unique control sets:         1
+ Number of LUT Flip Flop pairs used:    100
+   Number with an unused Flip Flop:      53  out of    100    53%  
+   Number with an unused LUT:             7  out of    100     7%  
+   Number of fully used LUT-FF pairs:    40  out of    100    40%  
+   Number of unique control sets:         3
 
 IO Utilization: 
  Number of IOs:                          11
@@ -305,8 +394,10 @@ Clock Information:
 -----------------------------------+------------------------+-------+
 Clock Signal                       | Clock buffer(FF name)  | Load  |
 -----------------------------------+------------------------+-------+
-m1/pll_base_inst/CLKOUT0           | BUFG                   | 25    |
+m1/pll_base_inst/CLKOUT0           | BUFG                   | 38    |
+m2/clk_out                         | NONE(m3/buffer_8)      | 9     |
 -----------------------------------+------------------------+-------+
+INFO:Xst:2169 - HDL ADVISOR - Some clock signals were not automatically buffered by XST with BUFG/BUFR resources. Please use the buffer_type constraint in order to insert these buffers to the clock signals to help prevent skew problems.
 
 Asynchronous Control Signals Information:
 ----------------------------------------
@@ -316,7 +407,7 @@ Timing Summary:
 ---------------
 Speed Grade: -3
 
-   Minimum period: 4.062ns (Maximum Frequency: 246.184MHz)
+   Minimum period: 5.001ns (Maximum Frequency: 199.952MHz)
    Minimum input arrival time before clock: No path found
    Maximum output required time after clock: 3.668ns
    Maximum combinational path delay: No path found
@@ -327,10 +418,10 @@ All values displayed in nanoseconds (ns)
 
 =========================================================================
 Timing constraint: Default period analysis for Clock 'm1/pll_base_inst/CLKOUT0'
-  Clock period: 4.062ns (frequency: 246.184MHz)
-  Total number of paths / destination ports: 711 / 25
+  Clock period: 5.001ns (frequency: 199.952MHz)
+  Total number of paths / destination ports: 794 / 38
 -------------------------------------------------------------------------
-Delay:               4.062ns (Levels of Logic = 3)
+Delay:               5.001ns (Levels of Logic = 4)
   Source:            hpos_10 (FF)
   Destination:       vpos_0 (FF)
   Source Clock:      m1/pll_base_inst/CLKOUT0 rising
@@ -340,18 +431,49 @@ Delay:               4.062ns (Levels of Logic = 3)
                                 Gate     Net
     Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
     ----------------------------------------  ------------
-     FD:C->Q               2   0.447   0.981  hpos_10 (hpos_10)
-     LUT6:I0->O           13   0.203   0.933  GND_1_o_GND_1_o_equal_6_o<11>11 (GND_1_o_GND_1_o_equal_6_o<11>1)
-     LUT6:I5->O           11   0.205   0.987  _n00743 (_n0074)
-     LUT2:I0->O            1   0.203   0.000  vpos_0_rstpot1 (vpos_0_rstpot1)
+     FD:C->Q               2   0.447   0.864  hpos_10 (hpos_10)
+     LUT4:I0->O            4   0.203   0.684  GND_1_o_GND_1_o_equal_6_o<11>111 (GND_1_o_GND_1_o_equal_6_o<11>11)
+     LUT4:I3->O           14   0.205   0.958  hpos[11]_GND_1_o_equal_7_o<11>11 (hpos[11]_GND_1_o_equal_7_o<11>1)
+     LUT6:I5->O           11   0.205   1.130  _n0101 (_n0101)
+     LUT4:I0->O            1   0.203   0.000  vpos_0_rstpot (vpos_0_rstpot)
      FD:D                      0.102          vpos_0
     ----------------------------------------
-    Total                      4.062ns (1.160ns logic, 2.902ns route)
-                                       (28.6% logic, 71.4% route)
+    Total                      5.001ns (1.365ns logic, 3.636ns route)
+                                       (27.3% logic, 72.7% route)
+
+=========================================================================
+Timing constraint: Default period analysis for Clock 'm2/clk_out'
+  Clock period: 1.973ns (frequency: 506.778MHz)
+  Total number of paths / destination ports: 45 / 9
+-------------------------------------------------------------------------
+Delay:               1.973ns (Levels of Logic = 9)
+  Source:            m3/buffer_1 (FF)
+  Destination:       m3/buffer_8 (FF)
+  Source Clock:      m2/clk_out rising
+  Destination Clock: m2/clk_out rising
+
+  Data Path: m3/buffer_1 to m3/buffer_8
+                                Gate     Net
+    Cell:in->out      fanout   Delay   Delay  Logical Name (Net Name)
+    ----------------------------------------  ------------
+     FD:C->Q               3   0.447   0.755  m3/buffer_1 (m3/buffer_1)
+     LUT3:I1->O            1   0.203   0.000  m3/Mcount_buffer_lut<1> (m3/Mcount_buffer_lut<1>)
+     MUXCY:S->O            1   0.172   0.000  m3/Mcount_buffer_cy<1> (m3/Mcount_buffer_cy<1>)
+     MUXCY:CI->O           1   0.019   0.000  m3/Mcount_buffer_cy<2> (m3/Mcount_buffer_cy<2>)
+     MUXCY:CI->O           1   0.019   0.000  m3/Mcount_buffer_cy<3> (m3/Mcount_buffer_cy<3>)
+     MUXCY:CI->O           1   0.019   0.000  m3/Mcount_buffer_cy<4> (m3/Mcount_buffer_cy<4>)
+     MUXCY:CI->O           1   0.019   0.000  m3/Mcount_buffer_cy<5> (m3/Mcount_buffer_cy<5>)
+     MUXCY:CI->O           1   0.019   0.000  m3/Mcount_buffer_cy<6> (m3/Mcount_buffer_cy<6>)
+     MUXCY:CI->O           0   0.019   0.000  m3/Mcount_buffer_cy<7> (m3/Mcount_buffer_cy<7>)
+     XORCY:CI->O           1   0.180   0.000  m3/Mcount_buffer_xor<8> (m3/Mcount_buffer8)
+     FD:D                      0.102          m3/buffer_8
+    ----------------------------------------
+    Total                      1.973ns (1.218ns logic, 0.755ns route)
+                                       (61.7% logic, 38.3% route)
 
 =========================================================================
 Timing constraint: Default OFFSET OUT AFTER for Clock 'm1/pll_base_inst/CLKOUT0'
-  Total number of paths / destination ports: 2 / 2
+  Total number of paths / destination ports: 10 / 10
 -------------------------------------------------------------------------
 Offset:              3.668ns (Levels of Logic = 1)
   Source:            hsync_pin (FF)
@@ -378,20 +500,30 @@ Clock to Setup on destination clock m1/pll_base_inst/CLKOUT0
                         | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
 Source Clock            |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
 ------------------------+---------+---------+---------+---------+
-m1/pll_base_inst/CLKOUT0|    4.062|         |         |         |
+m1/pll_base_inst/CLKOUT0|    5.001|         |         |         |
+m2/clk_out              |    2.894|         |         |         |
+------------------------+---------+---------+---------+---------+
+
+Clock to Setup on destination clock m2/clk_out
+------------------------+---------+---------+---------+---------+
+                        | Src:Rise| Src:Fall| Src:Rise| Src:Fall|
+Source Clock            |Dest:Rise|Dest:Rise|Dest:Fall|Dest:Fall|
+------------------------+---------+---------+---------+---------+
+m1/pll_base_inst/CLKOUT0|    2.548|         |         |         |
+m2/clk_out              |    1.973|         |         |         |
 ------------------------+---------+---------+---------+---------+
 
 =========================================================================
 
 
 Total REAL time to Xst completion: 8.00 secs
-Total CPU time to Xst completion: 8.28 secs
+Total CPU time to Xst completion: 8.45 secs
  
 --> 
 
-Total memory usage is 219660 kilobytes
+Total memory usage is 219676 kilobytes
 
 Number of errors   :    0 (   0 filtered)
-Number of warnings :    9 (   0 filtered)
-Number of infos    :    1 (   0 filtered)
+Number of warnings :   39 (   0 filtered)
+Number of infos    :    4 (   0 filtered)
 

@@ -1,2 +1,4 @@
 verilog work "ipcore_dir/VGA_Clocks.v"
+verilog work "lib/scroll_colour.v"
+verilog work "../lib/clk_div/clk_div.v"
 verilog work "VGA_Display.v"
