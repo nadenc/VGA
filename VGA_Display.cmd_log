@@ -3,9 +3,3 @@ ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -uc VGA_Display.ucf
 map -intstyle ise -p xc6slx9-csg324-3 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off -o VGA_Display_map.ncd VGA_Display.ngd VGA_Display.pcf 
 par -w -intstyle ise -ol high -mt off VGA_Display_map.ncd VGA_Display.ncd VGA_Display.pcf 
 trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml VGA_Display.twx VGA_Display.ncd -o VGA_Display.twr VGA_Display.pcf -ucf VGA_Display.ucf 
-xst -intstyle ise -ifn "D:/Projects/FPGA/VGA/VGA_Display.xst" -ofn "D:/Projects/FPGA/VGA/VGA_Display.syr" 
-ngdbuild -intstyle ise -dd _ngo -sd ipcore_dir -nt timestamp -uc VGA_Display.ucf -p xc6slx9-csg324-3 VGA_Display.ngc VGA_Display.ngd  
-map -intstyle ise -p xc6slx9-csg324-3 -w -logic_opt off -ol high -t 1 -xt 0 -register_duplication off -r 4 -global_opt off -mt off -ir off -pr off -lc off -power off -o VGA_Display_map.ncd VGA_Display.ngd VGA_Display.pcf 
-par -w -intstyle ise -ol high -mt off VGA_Display_map.ncd VGA_Display.ncd VGA_Display.pcf 
-trce -intstyle ise -v 3 -s 3 -n 3 -fastpaths -xml VGA_Display.twx VGA_Display.ncd -o VGA_Display.twr VGA_Display.pcf -ucf VGA_Display.ucf 
-bitgen -intstyle ise -f VGA_Display.ut VGA_Display.ncd 
